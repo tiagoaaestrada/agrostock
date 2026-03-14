@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Animais - AgroStock</title>
+</head>
+
+<body>
+
+<h1>Animais</h1>
+
+<input id="nome" placeholder="Nome do animal">
+
+<button onclick="adicionar()">Adicionar</button>
+
+<ul id="lista"></ul>
+
+<script>
+
+let animais=[]
+
+function adicionar(){
+
+let nome=document.getElementById("nome").value
+
+animais.push(nome)
+
+mostrar()
+
+}
+
+function mostrar(){
+
+let lista=document.getElementById("lista")
+
+lista.innerHTML=""
+
+animais.forEach(a=>{
+
+let li=document.createElement("li")
+li.innerText=a
+
+lista.appendChild(li)
+
+})
+
+}
+
+</script>
+
+</body>
+
+</html>
