@@ -2,26 +2,30 @@
 <html>
 
 <head>
-<title>Animais - AgroStock</title>
+
+<title>Animais</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<h1>Animais</h1>
+<h1>🐑 Animais</h1>
 
-<input id="nome" placeholder="Nome do animal">
+<button onclick="novoAnimal()">+ Novo Animal</button>
 
-<button onclick="adicionar()">Adicionar</button>
-
-<ul id="lista"></ul>
+<ul id="listaAnimais"></ul>
 
 <script>
 
 let animais=[]
 
-function adicionar(){
+function novoAnimal(){
 
-let nome=document.getElementById("nome").value
+let nome = prompt("Nome do animal")
+
+if(nome){
 
 animais.push(nome)
 
@@ -29,15 +33,18 @@ mostrar()
 
 }
 
+}
+
 function mostrar(){
 
-let lista=document.getElementById("lista")
+let lista = document.getElementById("listaAnimais")
 
 lista.innerHTML=""
 
 animais.forEach(a=>{
 
 let li=document.createElement("li")
+
 li.innerText=a
 
 lista.appendChild(li)
