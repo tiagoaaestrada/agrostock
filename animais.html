@@ -3,7 +3,7 @@
 
 <head>
 
-<title>Animais</title>
+<title>Animais - AgroStock</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -13,41 +13,122 @@
 
 <h1>🐑 Animais</h1>
 
-<button onclick="novoAnimal()">+ Novo Animal</button>
+<h2>Novo Animal</h2>
 
-<ul id="listaAnimais"></ul>
+<div>
+
+<input id="id" placeholder="ID interno">
+
+<input id="nome" placeholder="Nome">
+
+<select id="especie">
+<option>Ovino</option>
+<option>Bovino</option>
+<option>Caprino</option>
+<option>Suíno</option>
+<option>Aves</option>
+</select>
+
+<input id="raca" placeholder="Raça">
+
+<select id="sexo">
+<option>Macho</option>
+<option>Fêmea</option>
+<option>Castrado</option>
+</select>
+
+<input id="nascimento" type="date">
+
+<input id="pai" placeholder="Pai">
+
+<input id="mae" placeholder="Mãe">
+
+<input id="peso" placeholder="Peso (kg)">
+
+<input id="sanidade" placeholder="Evento sanitário">
+
+<button onclick="adicionarAnimal()">Guardar</button>
+
+</div>
+
+<hr>
+
+<h2>Lista de Animais</h2>
+
+<table border="1">
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>Nome</th>
+<th>Espécie</th>
+<th>Raça</th>
+<th>Sexo</th>
+<th>Nascimento</th>
+<th>Peso</th>
+</tr>
+
+</thead>
+
+<tbody id="tabelaAnimais"></tbody>
+
+</table>
 
 <script>
 
-let animais=[]
+let animais = JSON.parse(localStorage.getItem("animais")) || []
 
-function novoAnimal(){
+mostrarAnimais()
 
-let nome = prompt("Nome do animal")
+function adicionarAnimal(){
 
-if(nome){
+let animal = {
 
-animais.push(nome)
-
-mostrar()
+id:document.getElementById("id").value,
+nome:document.getElementById("nome").value,
+especie:document.getElementById("especie").value,
+raca:document.getElementById("raca").value,
+sexo:document.getElementById("sexo").value,
+nascimento:document.getElementById("nascimento").value,
+pai:document.getElementById("pai").value,
+mae:document.getElementById("mae").value,
+peso:document.getElementById("peso").value,
+sanidade:document.getElementById("sanidade").value
 
 }
 
+animais.push(animal)
+
+localStorage.setItem("animais",JSON.stringify(animais))
+
+mostrarAnimais()
+
 }
 
-function mostrar(){
+function mostrarAnimais(){
 
-let lista = document.getElementById("listaAnimais")
+let tabela = document.getElementById("tabelaAnimais")
 
-lista.innerHTML=""
+tabela.innerHTML=""
 
 animais.forEach(a=>{
 
-let li=document.createElement("li")
+let linha = document.createElement("tr")
 
-li.innerText=a
+linha.innerHTML = `
 
-lista.appendChild(li)
+<td>${a.id}</td>
+<td>${a.nome}</td>
+<td>${a.especie}</td>
+<td>${a.raca}</td>
+<td>${a.sexo}</td>
+<td>${a.nascimento}</td>
+<td>${a.peso}</td>
+
+`
+
+tabela.appendChild(linha)
 
 })
 
