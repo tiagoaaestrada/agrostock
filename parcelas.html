@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Parcelas</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h1>🌱 Parcelas</h1>
+
+<button onclick="novaParcela()">+ Nova Parcela</button>
+
+<ul id="listaParcelas"></ul>
+
+<script>
+
+let parcelas=[]
+
+function novaParcela(){
+
+let nome = prompt("Nome da parcela")
+
+if(nome){
+
+parcelas.push(nome)
+
+mostrar()
+
+}
+
+}
+
+function mostrar(){
+
+let lista=document.getElementById("listaParcelas")
+
+lista.innerHTML=""
+
+parcelas.forEach(p=>{
+
+let li=document.createElement("li")
+
+li.innerText=p
+
+lista.appendChild(li)
+
+})
+
+}
+
+</script>
+
+</body>
+
+</html>
