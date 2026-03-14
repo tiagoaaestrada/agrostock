@@ -7,19 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style>
-
-body{
-font-family: Arial;
-padding:40px;
-}
-
-button{
-padding:10px;
-margin:10px;
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -27,23 +15,19 @@ margin:10px;
 
 <h1>AgroStock</h1>
 
-<h2>Gestão de Animais</h2>
+<div class="menu">
 
-<button onclick="irAnimais()">Animais</button>
+<button onclick="abrir('animais.html')">🐑 Animais</button>
 
-<button onclick="irParcelas()">Parcelas</button>
+<button onclick="abrir('parcelas.html')">🌱 Parcelas</button>
 
-<script>
+<button onclick="abrir('registos.html')">📋 Registos</button>
 
-function irAnimais(){
-window.location="animais.html"
-}
+<button onclick="abrir('config.html')">⚙ Configurações</button>
 
-function irParcelas(){
-window.location="parcelas.html"
-}
+</div>
 
-</script>
+<script src="app.js"></script>
 
 </body>
 
