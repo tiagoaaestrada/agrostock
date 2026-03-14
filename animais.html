@@ -17,7 +17,7 @@
 
 <div>
 
-<input id="id" placeholder="ID interno">
+<p>ID do animal: <b id="novoID"></b></p>
 
 <input id="nome" placeholder="Nome">
 
@@ -29,7 +29,8 @@
 <option>Aves</option>
 </select>
 
-<input id="raca" placeholder="Raça">
+<input id="raca" list="listaRacas" placeholder="Raça">
+<datalist id="listaRacas"></datalist>
 
 <select id="sexo">
 <option>Macho</option>
@@ -39,9 +40,11 @@
 
 <input id="nascimento" type="date">
 
-<input id="pai" placeholder="Pai">
+<input id="pai" list="listaPais" placeholder="Pai">
+<datalist id="listaPais"></datalist>
 
-<input id="mae" placeholder="Mãe">
+<input id="mae" list="listaMaes" placeholder="Mãe">
+<datalist id="listaMaes"></datalist>
 
 <input id="peso" placeholder="Peso (kg)">
 
@@ -77,6 +80,18 @@
 
 <script>
 
+document.getElementById("novoID").innerText = gerarIDPreview()
+
+function gerarIDPreview(){
+
+let ultimo = localStorage.getItem("ultimoID") || 0
+
+ultimo++
+
+return String(ultimo).padStart(3,"0")
+
+}
+  
 let animais = JSON.parse(localStorage.getItem("animais")) || []
 
 mostrarAnimais()
@@ -85,7 +100,7 @@ function adicionarAnimal(){
 
 let animal = {
 
-id:document.getElementById("id").value,
+id:gerarID(),
 nome:document.getElementById("nome").value,
 especie:document.getElementById("especie").value,
 raca:document.getElementById("raca").value,
@@ -104,6 +119,10 @@ localStorage.setItem("animais",JSON.stringify(animais))
 
 mostrarAnimais()
 
+guardarBase("racas",animal.raca)
+guardarBase("pais",animal.pai)
+guardarBase("maes",animal.mae)
+  
 }
 
 function mostrarAnimais(){
@@ -134,6 +153,58 @@ tabela.appendChild(linha)
 
 }
 
+function carregarBase(tipo,listaID){
+
+let base = JSON.parse(localStorage.getItem(tipo)) || []
+
+let lista = document.getElementById(listaID)
+
+lista.innerHTML=""
+
+base.forEach(v=>{
+
+let opt=document.createElement("option")
+
+opt.value=v
+
+lista.appendChild(opt)
+
+})
+
+}
+  
+function gerarID(){
+
+let ultimo = localStorage.getItem("ultimoID") || 0
+
+ultimo++
+
+localStorage.setItem("ultimoID", ultimo)
+
+return String(ultimo).padStart(3,"0")
+
+}
+
+function guardarBase(tipo,valor){
+
+if(!valor) return
+
+let base = JSON.parse(localStorage.getItem(tipo)) || []
+
+if(!base.includes(valor)){
+
+base.push(valor)
+
+localStorage.setItem(tipo,JSON.stringify(base))
+
+}
+
+}
+
+carregarBase("racas","listaRacas")
+carregarBase("pais","listaPais")
+carregarBase("maes","listaMaes")
+  
 </script>
 
 </body>
