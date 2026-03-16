@@ -3,6 +3,8 @@
 
 <head>
 
+  <button onclick="voltar()">⬅ Voltar</button>
+  
 <title>Animais - AgroStock</title>
 
 <link rel="stylesheet" href="style.css">
@@ -70,6 +72,8 @@
 <th>Sexo</th>
 <th>Nascimento</th>
 <th>Peso</th>
+<th>Editar</th>
+<th>Apagar</th>
 </tr>
 
 </thead>
@@ -80,6 +84,12 @@
 
 <script>
 
+function voltar(){
+
+window.location = "index.html"
+
+}
+  
 document.getElementById("novoID").innerText = gerarIDPreview()
 
 function gerarIDPreview(){
@@ -131,7 +141,7 @@ let tabela = document.getElementById("tabelaAnimais")
 
 tabela.innerHTML=""
 
-animais.forEach(a=>{
+animais.forEach((a,index)=>{
 
 let linha = document.createElement("tr")
 
@@ -145,6 +155,14 @@ linha.innerHTML = `
 <td>${a.nascimento}</td>
 <td>${a.peso}</td>
 
+<td>
+<button onclick="editarAnimal(${index})">✏</button>
+</td>
+
+<td>
+<button onclick="apagarAnimal(${index})">🗑</button>
+</td>
+
 `
 
 tabela.appendChild(linha)
@@ -153,6 +171,40 @@ tabela.appendChild(linha)
 
 }
 
+function apagarAnimal(index){
+
+if(confirm("Apagar este animal?")){
+
+animais.splice(index,1)
+
+localStorage.setItem("animais",JSON.stringify(animais))
+
+mostrarAnimais()
+
+}
+
+}
+
+  function editarAnimal(index){
+
+let animal = animais[index]
+
+let novoNome = prompt("Nome",animal.nome)
+let novoPeso = prompt("Peso",animal.peso)
+
+if(novoNome !== null){
+
+animal.nome = novoNome
+animal.peso = novoPeso
+
+localStorage.setItem("animais",JSON.stringify(animais))
+
+mostrarAnimais()
+
+}
+
+}
+  
 function carregarBase(tipo,listaID){
 
 let base = JSON.parse(localStorage.getItem(tipo)) || []
