@@ -3,8 +3,6 @@
 
 <head>
 
-  <button onclick="voltar()">⬅ Voltar</button>
-  
 <title>Animais - AgroStock</title>
 
 <link rel="stylesheet" href="style.css">
@@ -12,6 +10,8 @@
 </head>
 
 <body>
+
+<button onclick="voltar()">⬅ Voltar</button>
 
 <h1>🐑 Animais</h1>
 
@@ -63,7 +63,6 @@
 <table border="1">
 
 <thead>
-
 <tr>
 <th>ID</th>
 <th>Nome</th>
@@ -75,7 +74,6 @@
 <th>Editar</th>
 <th>Apagar</th>
 </tr>
-
 </thead>
 
 <tbody id="tabelaAnimais"></tbody>
@@ -85,20 +83,18 @@
 <script>
 
 function voltar(){
-
 window.location = "index.html"
-
 }
-  
-document.getElementById("novoID").innerText = gerarIDPreview()
 
-  
 let animais = JSON.parse(localStorage.getItem("animais")) || []
 
 mostrarAnimais()
+atualizarID()
 
-  atualizarID()
-  
+carregarBase("racas","listaRacas")
+carregarBase("pais","listaPais")
+carregarBase("maes","listaMaes")
+
 function adicionarAnimal(){
 
 let idAtual = proximoID()
@@ -121,12 +117,16 @@ sanidade:document.getElementById("sanidade").value
 animais.push(animal)
 
 localStorage.setItem("animais",JSON.stringify(animais))
-
 localStorage.setItem("ultimoID",parseInt(idAtual))
 
-mostrarAnimais()
+guardarBase("racas",animal.raca)
+guardarBase("pais",animal.pai)
+guardarBase("maes",animal.mae)
 
+mostrarAnimais()
 atualizarID()
+
+limparFormulario()
 
 }
 
@@ -141,7 +141,6 @@ animais.forEach((a,index)=>{
 let linha = document.createElement("tr")
 
 linha.innerHTML = `
-
 <td>${a.id}</td>
 <td>${a.nome}</td>
 <td>${a.especie}</td>
@@ -157,7 +156,6 @@ linha.innerHTML = `
 <td>
 <button onclick="apagarAnimal(${index})">🗑</button>
 </td>
-
 `
 
 tabela.appendChild(linha)
@@ -175,14 +173,13 @@ animais.splice(index,1)
 localStorage.setItem("animais",JSON.stringify(animais))
 
 mostrarAnimais()
-
-  atualizarID()
-
-}
+atualizarID()
 
 }
 
-  function editarAnimal(index){
+}
+
+function editarAnimal(index){
 
 let animal = animais[index]
 
@@ -198,40 +195,16 @@ localStorage.setItem("animais",JSON.stringify(animais))
 
 mostrarAnimais()
 
-  atualizarID()
-
 }
 
 }
-  
-function carregarBase(tipo,listaID){
 
-let base = JSON.parse(localStorage.getItem(tipo)) || []
-
-let lista = document.getElementById(listaID)
-
-lista.innerHTML=""
-
-base.forEach(v=>{
-
-let opt=document.createElement("option")
-
-opt.value=v
-
-lista.appendChild(opt)
-
-})
-
-}
-  
 function proximoID(){
 
 let ultimo = localStorage.getItem("ultimoID")
 
 if(!ultimo){
-
 ultimo = 0
-
 }
 
 ultimo = parseInt(ultimo) + 1
@@ -240,9 +213,21 @@ return String(ultimo).padStart(3,"0")
 
 }
 
-  function atualizarID(){
+function atualizarID(){
 
 document.getElementById("novoID").innerText = proximoID()
+
+}
+
+function limparFormulario(){
+
+document.getElementById("nome").value=""
+document.getElementById("raca").value=""
+document.getElementById("nascimento").value=""
+document.getElementById("pai").value=""
+document.getElementById("mae").value=""
+document.getElementById("peso").value=""
+document.getElementById("sanidade").value=""
 
 }
 
@@ -262,10 +247,26 @@ localStorage.setItem(tipo,JSON.stringify(base))
 
 }
 
-carregarBase("racas","listaRacas")
-carregarBase("pais","listaPais")
-carregarBase("maes","listaMaes")
-  
+function carregarBase(tipo,listaID){
+
+let base = JSON.parse(localStorage.getItem(tipo)) || []
+
+let lista = document.getElementById(listaID)
+
+lista.innerHTML=""
+
+base.forEach(v=>{
+
+let opt=document.createElement("option")
+
+opt.value=v
+
+lista.appendChild(opt)
+
+})
+
+}
+
 </script>
 
 </body>
