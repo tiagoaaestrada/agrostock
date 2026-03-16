@@ -117,7 +117,6 @@ sanidade:document.getElementById("sanidade").value
 animais.push(animal)
 
 localStorage.setItem("animais",JSON.stringify(animais))
-localStorage.setItem("ultimoID",parseInt(idAtual))
 
 guardarBase("racas",animal.raca)
 guardarBase("pais",animal.pai)
@@ -201,15 +200,15 @@ mostrarAnimais()
 
 function proximoID(){
 
-let ultimo = localStorage.getItem("ultimoID")
+let ids = animais.map(a => parseInt(a.id))
 
-if(!ultimo){
-ultimo = 0
+let i = 1
+
+while(ids.includes(i)){
+i++
 }
 
-ultimo = parseInt(ultimo) + 1
-
-return String(ultimo).padStart(3,"0")
+return String(i).padStart(3,"0")
 
 }
 
