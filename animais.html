@@ -92,25 +92,20 @@ window.location = "index.html"
   
 document.getElementById("novoID").innerText = gerarIDPreview()
 
-function gerarIDPreview(){
-
-let ultimo = localStorage.getItem("ultimoID") || 0
-
-ultimo++
-
-return String(ultimo).padStart(3,"0")
-
-}
   
 let animais = JSON.parse(localStorage.getItem("animais")) || []
 
 mostrarAnimais()
 
+  atualizarID()
+  
 function adicionarAnimal(){
+
+let idAtual = proximoID()
 
 let animal = {
 
-id:gerarID(),
+id:idAtual,
 nome:document.getElementById("nome").value,
 especie:document.getElementById("especie").value,
 raca:document.getElementById("raca").value,
@@ -127,12 +122,12 @@ animais.push(animal)
 
 localStorage.setItem("animais",JSON.stringify(animais))
 
+localStorage.setItem("ultimoID",parseInt(idAtual))
+
 mostrarAnimais()
 
-guardarBase("racas",animal.raca)
-guardarBase("pais",animal.pai)
-guardarBase("maes",animal.mae)
-  
+atualizarID()
+
 }
 
 function mostrarAnimais(){
@@ -181,6 +176,8 @@ localStorage.setItem("animais",JSON.stringify(animais))
 
 mostrarAnimais()
 
+  atualizarID()
+
 }
 
 }
@@ -200,6 +197,8 @@ animal.peso = novoPeso
 localStorage.setItem("animais",JSON.stringify(animais))
 
 mostrarAnimais()
+
+  atualizarID()
 
 }
 
@@ -225,15 +224,25 @@ lista.appendChild(opt)
 
 }
   
-function gerarID(){
+function proximoID(){
 
-let ultimo = localStorage.getItem("ultimoID") || 0
+let ultimo = localStorage.getItem("ultimoID")
 
-ultimo++
+if(!ultimo){
 
-localStorage.setItem("ultimoID", ultimo)
+ultimo = 0
+
+}
+
+ultimo = parseInt(ultimo) + 1
 
 return String(ultimo).padStart(3,"0")
+
+}
+
+  function atualizarID(){
+
+document.getElementById("novoID").innerText = proximoID()
 
 }
 
