@@ -4,7 +4,6 @@
 <head>
 
 <title>Animais - AgroStock</title>
-
 <link rel="stylesheet" href="style.css">
 
 </head>
@@ -49,10 +48,9 @@
 <datalist id="listaMaes"></datalist>
 
 <input id="peso" placeholder="Peso (kg)">
-
 <input id="sanidade" placeholder="Evento sanitário">
 
-  <button onclick="guardarAnimal()">Guardar</button>
+<button onclick="guardarAnimal()">Guardar</button>
 
 </div>
 
@@ -71,7 +69,7 @@
 <th>Sexo</th>
 <th>Nascimento</th>
 <th>Peso</th>
-<th></th>
+<th>Editar</th>
 <th>Apagar</th>
 </tr>
 </thead>
@@ -82,9 +80,9 @@
 
 <script>
 
-  let animalEmEdicao = null
+let animalEmEdicao = null
 
-  function voltar(){
+function voltar(){
 window.location = "index.html"
 }
 
@@ -102,13 +100,9 @@ function guardarAnimal(){
 let idAtual
 
 if(animalEmEdicao !== null){
-
 idAtual = animais[animalEmEdicao].id
-
 }else{
-
 idAtual = proximoID()
-
 }
 
 let animal = {
@@ -169,7 +163,7 @@ linha.innerHTML = `
 <td>${a.peso}</td>
 
 <td>
-<button onclick="Animal(${index})">✏</button>
+<button onclick="editarAnimal(${index})">✏</button>
 </td>
 
 <td>
