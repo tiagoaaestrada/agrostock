@@ -52,7 +52,7 @@
 
 <input id="sanidade" placeholder="Evento sanitário">
 
-<button onclick="adicionarAnimal()">Guardar</button>
+  <button onclick="guardarAnimal()">Guardar</button>
 
 </div>
 
@@ -71,7 +71,7 @@
 <th>Sexo</th>
 <th>Nascimento</th>
 <th>Peso</th>
-<th>Editar</th>
+<th></th>
 <th>Apagar</th>
 </tr>
 </thead>
@@ -82,7 +82,9 @@
 
 <script>
 
-function voltar(){
+  let animalEmEdicao = null
+
+  function voltar(){
 window.location = "index.html"
 }
 
@@ -95,9 +97,19 @@ carregarBase("racas","listaRacas")
 carregarBase("pais","listaPais")
 carregarBase("maes","listaMaes")
 
-function adicionarAnimal(){
+function guardarAnimal(){
 
-let idAtual = proximoID()
+let idAtual
+
+if(animalEmEdicao !== null){
+
+idAtual = animais[animalEmEdicao].id
+
+}else{
+
+idAtual = proximoID()
+
+}
 
 let animal = {
 
@@ -114,7 +126,16 @@ sanidade:document.getElementById("sanidade").value
 
 }
 
+if(animalEmEdicao !== null){
+
+animais[animalEmEdicao] = animal
+animalEmEdicao = null
+
+}else{
+
 animais.push(animal)
+
+}
 
 localStorage.setItem("animais",JSON.stringify(animais))
 
@@ -124,7 +145,6 @@ guardarBase("maes",animal.mae)
 
 mostrarAnimais()
 atualizarID()
-
 limparFormulario()
 
 }
@@ -149,7 +169,7 @@ linha.innerHTML = `
 <td>${a.peso}</td>
 
 <td>
-<button onclick="editarAnimal(${index})">✏</button>
+<button onclick="Animal(${index})">✏</button>
 </td>
 
 <td>
@@ -182,19 +202,19 @@ function editarAnimal(index){
 
 let animal = animais[index]
 
-let novoNome = prompt("Nome",animal.nome)
-let novoPeso = prompt("Peso",animal.peso)
+animalEmEdicao = index
 
-if(novoNome !== null){
+document.getElementById("nome").value = animal.nome
+document.getElementById("especie").value = animal.especie
+document.getElementById("raca").value = animal.raca
+document.getElementById("sexo").value = animal.sexo
+document.getElementById("nascimento").value = animal.nascimento
+document.getElementById("pai").value = animal.pai
+document.getElementById("mae").value = animal.mae
+document.getElementById("peso").value = animal.peso
+document.getElementById("sanidade").value = animal.sanidade
 
-animal.nome = novoNome
-animal.peso = novoPeso
-
-localStorage.setItem("animais",JSON.stringify(animais))
-
-mostrarAnimais()
-
-}
+document.getElementById("novoID").innerText = animal.id
 
 }
 
