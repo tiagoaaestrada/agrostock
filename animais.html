@@ -145,6 +145,8 @@ limparFormulario()
 
 function mostrarAnimais(){
 
+<button onclick="editarAnimal(${index})">✏</button>
+  
 let tabela = document.getElementById("tabelaAnimais")
 
 tabela.innerHTML=""
@@ -194,9 +196,9 @@ atualizarID()
 
 function editarAnimal(index){
 
-let animal = animais[index]
-
 animalEmEdicao = index
+
+let animal = animais[index]
 
 document.getElementById("nome").value = animal.nome
 document.getElementById("especie").value = animal.especie
